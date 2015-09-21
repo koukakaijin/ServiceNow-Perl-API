@@ -22,7 +22,7 @@
 package ServiceNow::WS;
 #use Data::Dumper;
 
-$VERSION = '1.01';
+$VERSION = '1.02';
 my $RESULT;
 my $TYPE;
 
