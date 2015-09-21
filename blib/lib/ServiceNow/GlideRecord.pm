@@ -247,7 +247,7 @@ sub delete {
  my $me = shift;
  my $sys_id = $me->getValue("sys_id");
   if (!defined($sys_id)) {
-  	die "call query first before calling update";
+  	die "call query first before calling delete";
   }
   
   my $w = $me->{'WS'}->_delete($sys_id);
