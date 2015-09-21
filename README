@@ -10,6 +10,13 @@ To install this module, run the following commands:
 	make
 	make test
 	make install
+	
+To install this module in a windows O.S. we have tested dmake module:
+	
+	perl Makefile.PL
+	dmake
+	dmake test
+	dmake install
 
 SUPPORT AND DOCUMENTATION
 
@@ -17,21 +24,6 @@ After installing, you can find documentation for this module with the
 perldoc command.
 
     perldoc ServiceNow
-
-You can also look for information at:
-
-    RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=ServiceNow
-
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/ServiceNow
-
-    CPAN Ratings
-        http://cpanratings.perl.org/d/ServiceNow
-
-    Search CPAN
-        http://search.cpan.org/dist/ServiceNow/
-
 
 LICENSE AND COPYRIGHT
 
