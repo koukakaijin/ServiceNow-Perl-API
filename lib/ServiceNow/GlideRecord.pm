@@ -15,6 +15,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#	1.02 delete implemented
+#
 # ======================================================================
 
 package ServiceNow::GlideRecord;
@@ -240,6 +242,7 @@ sub update {
 }
 
 # implemented by Daniel Hernandez Cassel
+
 sub delete {
  my $me = shift;
  my $sys_id = $me->getValue("sys_id");
