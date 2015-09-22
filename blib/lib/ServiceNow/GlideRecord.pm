@@ -375,7 +375,11 @@ sub get {
   foreach $k (sort keys %h){
 		$result.="$k ::> $h{$k}\n";
   }
-  return $result;
+  if (defined $result and length $result){
+    return $result;
+  }else{
+	return "no results for the query";
+  }
 }
 
 1;
