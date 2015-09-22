@@ -17,13 +17,14 @@
 #
 #	1.02 _delete implemented
 #	1.03 _getKeys implemented
+#	1.04 _get implemented
 #
 # ======================================================================
 
 package ServiceNow::WS;
 #use Data::Dumper;
 
-$VERSION = '1.03';
+$VERSION = '1.04';
 my $RESULT;
 my $TYPE;
 
@@ -91,16 +92,22 @@ sub _update {
   return $RESULT;
 }
 
-# not implemented
+# implemented by Daniel Hernandez Cassel
 
 sub _get {
-	
+  my ($me, $sysId) = (shift, shift);
+  
+  $hash{'sys_id'} = $sysId;
+  $TYPE = "get";
+  $RESULT = $me->{ $me->{'TARGET'}}->send($TYPE, \%hash);
+  
+  return $RESULT;
 }
 
 # implemented by Daniel Hernandez Cassel
 
 sub _getKeys {
-	  my ($me, %hash) = (shift, %{(shift)});
+  my ($me, %hash) = (shift, %{(shift)});
   
   $TYPE = "getKeys";
   $RESULT = $me->{ $me->{'TARGET'}}->send($TYPE, \%hash);
