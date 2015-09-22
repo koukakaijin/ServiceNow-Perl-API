@@ -350,19 +350,18 @@ sub queryKeys {
   } elsif (defined($me->{'QUERIES'})) {
   	%hash = @{$me->{'QUERIES'}};
   }
-
-  $me->{'QCOUNT'} = 0;
   $me->{'RESULTS'} = $me->{'WS'}->_getKeys(\%hash);
-  my %keyHash = %{$me->{'RESULTS'}->{'getKeysResponse'}};
-  $me->{'RESULTS_SIZE'} = $me->{'RESULTS'}->{'getKeysResponse'}->{'count'};
 }
 
 # implemented by Daniel Hernandez Cassel
 
 sub getKeyValue {
   my $me = shift;
-  
-  return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'}
+  if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} == 0){
+	return "no results for the query";
+  }else{
+    return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'}
+  }
 }
 
 1;
