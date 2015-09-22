@@ -365,11 +365,16 @@ sub getKeyValue {
   }
 }
 
+# implemented by Daniel Hernandez Cassel
+
 sub get {
   my ($me, $sys_id) = (shift, shift);
-  my $result;
+  my ($result, $k);
   $me->{'RESULTS'} = $me->{'WS'}->_get($sys_id);
-  while (my ($k,$v)=each $me->{'RESULTS'}->{'getResponse'}){$result=$result."$k : $v\n"};
+  my %h = %{$me->{'RESULTS'}->{'getResponse'}};
+  foreach $k (sort keys %h){
+		$result.="$k ::> $h{$k}\n";
+  }
   return $result;
 }
 
