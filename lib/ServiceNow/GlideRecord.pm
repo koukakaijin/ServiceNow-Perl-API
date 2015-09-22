@@ -17,6 +17,7 @@
 #
 #	1.02 delete implemented
 #	1.03 queryKeys and getKeyValue implemented
+#	1.04 get implemented
 #
 # ======================================================================
 
@@ -25,7 +26,7 @@ package ServiceNow::GlideRecord;
 use ServiceNow::WS;
 use ServiceNow::WSResult;
 
-$VERSION = '1.03';
+$VERSION = '1.04';
 
 my @VALUES;
 my @QUERIES;
@@ -360,8 +361,16 @@ sub getKeyValue {
   if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} == 0){
 	return "no results for the query";
   }else{
-    return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'}
+    return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'};
   }
+}
+
+sub get {
+  my ($me, $sys_id) = (shift, shift);
+  my $result;
+  $me->{'RESULTS'} = $me->{'WS'}->_get($sys_id);
+  while (my ($k,$v)=each $me->{'RESULTS'}->{'getResponse'}){$result=$result."$k : $v\n"};
+  return $result;
 }
 
 1;
