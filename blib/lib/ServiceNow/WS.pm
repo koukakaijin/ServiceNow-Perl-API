@@ -15,14 +15,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#	1.02 -delete implemented
+#	1.02 _delete implemented
+#	1.03 _getKeys implemented
 #
 # ======================================================================
 
 package ServiceNow::WS;
 #use Data::Dumper;
 
-$VERSION = '1.02';
+$VERSION = '1.03';
 my $RESULT;
 my $TYPE;
 
@@ -96,8 +97,15 @@ sub _get {
 	
 }
 
+# implemented by Daniel Hernandez Cassel
+
 sub _getKeys {
-	
+	  my ($me, %hash) = (shift, %{(shift)});
+  
+  $TYPE = "getKeys";
+  $RESULT = $me->{ $me->{'TARGET'}}->send($TYPE, \%hash);
+  
+  return $RESULT;
 }
 
 # implemented by Daniel Hernandez Cassel

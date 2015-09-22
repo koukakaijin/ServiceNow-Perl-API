@@ -16,6 +16,7 @@
 #   limitations under the License.
 #
 #	1.02 delete implemented
+#	1.03 queryKeys and getKeyValue implemented
 #
 # ======================================================================
 
@@ -24,7 +25,7 @@ package ServiceNow::GlideRecord;
 use ServiceNow::WS;
 use ServiceNow::WSResult;
 
-$VERSION = '1.02';
+$VERSION = '1.03';
 
 my @VALUES;
 my @QUERIES;
@@ -336,6 +337,32 @@ sub getTableName {
 
 sub getConfig {
 	return $CONFIG;
+}
+
+# implemented by Daniel Hernandez Cassel
+
+sub queryKeys {
+  my ($me, $hashArg) = (shift, shift);
+  my %hash;
+  
+  if (defined($hashArg)) {
+  	%hash = %{($hashArg)};
+  } elsif (defined($me->{'QUERIES'})) {
+  	%hash = @{$me->{'QUERIES'}};
+  }
+
+  $me->{'QCOUNT'} = 0;
+  $me->{'RESULTS'} = $me->{'WS'}->_getKeys(\%hash);
+  my %keyHash = %{$me->{'RESULTS'}->{'getKeysResponse'}};
+  $me->{'RESULTS_SIZE'} = $me->{'RESULTS'}->{'getKeysResponse'}->{'count'};
+}
+
+# implemented by Daniel Hernandez Cassel
+
+sub getKeyValue {
+  my $me = shift;
+  
+  return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'}
 }
 
 1;
