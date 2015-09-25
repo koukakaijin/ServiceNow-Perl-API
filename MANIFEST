@@ -1,9 +1,9 @@
 Changes
+LICENSE
+NOTICE
 MANIFEST
 Makefile.PL
 README
-LICENSE
-NOTICE
 lib/ServiceNow/Attachment.pm
 lib/ServiceNow/Configuration.pm
 lib/ServiceNow/Connection.pm
@@ -23,6 +23,7 @@ lib/ServiceNow/Universal.pm
 lib/ServiceNow/WS.pm
 lib/ServiceNow/WSResult.pm
 lib/ServiceNow.pm
+new/encodedQuery.pl
 t/00-load.t
 t/manifest.t
 t/pod-coverage.t
