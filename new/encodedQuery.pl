@@ -48,7 +48,7 @@ my $method = SOAP::Data->name('getRecords')
 
 #"sys_created_on<=javascript:gs.dateGenerate('2012-09-16','21:20:59')^sys_created_on>=javascript:gs.dateGenerate('2012-08-31','17:01:31')"  
 #"nameSTARTSWITHMADP5F00" 
-#"opened_by='fbc03f93a99d34c46fbbb49f519ed2c1"
+#"opened_by='fbc03f93a99d34c46fbbb49f519678a6"
 my @params = ( SOAP::Data->name(__encoded_query => $query) );  
 my %keyHash = %{ $soap->call($method => @params)->body->{'getRecordsResponse'} };
 
