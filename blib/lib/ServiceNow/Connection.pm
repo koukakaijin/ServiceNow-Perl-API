@@ -15,6 +15,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#	1.01 sendEncoded implemented
+#
 # ======================================================================
 
 package ServiceNow::Connection;
@@ -22,7 +24,7 @@ package ServiceNow::Connection;
 # default is using SOAP::Lite
 use SOAP::Lite;
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 my $CONFIG;
 
 =pod
@@ -83,6 +85,19 @@ sub send {
   my $RESULT = $me->{'SOAP'}->call($METHOD => @PARAMS);
   # return the element within the Body element, removing SOAP::Lite dependencies
   return $RESULT->valueof('Body');
+}
+
+# implemented by Daniel Hernandez Cassel
+# used to send encodedQuery
+
+sub sendEncoded {
+  my ($me, $methodName, $query) = (shift, shift, shift);
+  
+  my $soap = $me->{'SOAP'};
+  my $method = SOAP::Data->name($methodName)->attr({xmlns => 'http://www.service-now.com/'});
+  my @params = ( SOAP::Data->name(__encoded_query => $query) );  
+  my %keyHash = %{ $soap->call($method => @params)->body->{'getRecordsResponse'} };
+  return %keyHash;
 }
 
 sub close {

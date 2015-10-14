@@ -18,6 +18,7 @@
 #	1.02 delete implemented
 #	1.03 queryKeys and getKeyValue implemented
 #	1.04 get implemented
+#	1.05 encodedQuery implemented
 #
 # ======================================================================
 
@@ -26,7 +27,7 @@ package ServiceNow::GlideRecord;
 use ServiceNow::WS;
 use ServiceNow::WSResult;
 
-$VERSION = '1.04';
+$VERSION = '1.05';
 
 my @VALUES;
 my @QUERIES;
@@ -143,7 +144,6 @@ Refines query to include only the Glide Records with field name=value.
 
 sub addQuery {
 	my ($me, $name, $value) = (shift, shift, shift);
-	
 	push(@{$me->{'QUERIES'}}, ($name => $value));
 }
 
@@ -358,7 +358,7 @@ sub queryKeys {
 
 sub getKeyValue {
   my $me = shift;
-  if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} == 0){
+  if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} eq 0){
 	return "no results for the query";
   }else{
     return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'};
@@ -380,6 +380,15 @@ sub get {
   }else{
 	return "no results for the query";
   }
+}
+
+# implemented by Daniel Hernandez Cassel
+
+sub encodedQuery {
+	my ($me, %value) = @_;
+	my @v = values %value;
+	my %w = $me->{'WS'}->_encodedQuery(@v);
+	return %w;
 }
 
 1;
