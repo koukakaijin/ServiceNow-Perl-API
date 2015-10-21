@@ -18,6 +18,7 @@
 #	1.02 delete implemented
 #	1.03 queryKeys and getKeyValue implemented
 #	1.04 get implemented
+#	1.05 encodedQuery implemented
 #
 # ======================================================================
 
@@ -26,7 +27,7 @@ package ServiceNow::GlideRecord;
 use ServiceNow::WS;
 use ServiceNow::WSResult;
 
-$VERSION = '1.04';
+$VERSION = '1.05';
 
 my @VALUES;
 my @QUERIES;
@@ -143,7 +144,6 @@ Refines query to include only the Glide Records with field name=value.
 
 sub addQuery {
 	my ($me, $name, $value) = (shift, shift, shift);
-	
 	push(@{$me->{'QUERIES'}}, ($name => $value));
 }
 
@@ -340,7 +340,18 @@ sub getConfig {
 	return $CONFIG;
 }
 
-# implemented by Daniel Hernandez Cassel
+=head2 queryKeys
+implemented by Daniel Hernandez Cassel
+
+queryKeys(optional hash arguments)
+
+Example:
+
+	$glideRecord->queryKeys();
+	
+Returns the sys_id of all the Glide Records in the Table with specified query.
+Get the Records with the getKeyValue() call.
+=cut
 
 sub queryKeys {
   my ($me, $hashArg) = (shift, shift);
@@ -354,18 +365,38 @@ sub queryKeys {
   $me->{'RESULTS'} = $me->{'WS'}->_getKeys(\%hash);
 }
 
-# implemented by Daniel Hernandez Cassel
+=head2 getKeyValue
+implemented by Daniel Hernandez Cassel
+
+getKeyValue()
+
+Example:
+
+	$glideRecord->getKeyValue();
+	
+Gets the sys_id values of the Glide Records obtained in previusly in a queryKeys() call.
+=cut
 
 sub getKeyValue {
   my $me = shift;
-  if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} == 0){
+  if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} eq 0){
 	return "no results for the query";
   }else{
     return $me->{'RESULTS'}->{'getKeysResponse'}->{'sys_id'};
   }
 }
 
-# implemented by Daniel Hernandez Cassel
+=head2 get
+implemented by Daniel Hernandez Cassel
+
+get($sys_id)
+
+Example:
+
+	$glideRecord->get($sys_id);
+	
+Gets all the elements and values of the glide record with the sys_id equal to $sys_id of the Table.
+=cut
 
 sub get {
   my ($me, $sys_id) = (shift, shift);
@@ -380,6 +411,26 @@ sub get {
   }else{
 	return "no results for the query";
   }
+}
+
+=head2 encodedQuery
+implemented by Daniel Hernandez Cassel
+
+encodedQuery($query)
+
+Example:
+
+	$glideRecord = ServiceNow::GlideRecord->new($CONFIG,$table);
+	%result = $glideRecord->encodedQuery($CONFIG,$query); #query contains the encoded query.
+	
+Gets all the elements and values of the glide records that result of the encoded query for the Table.
+=cut
+
+sub encodedQuery {
+	my ($me, %value) = @_;
+	my @v = values %value;
+	my %w = $me->{'WS'}->_encodedQuery(@v);
+	return %w;
 }
 
 1;

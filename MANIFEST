@@ -1,9 +1,9 @@
 Changes
+LICENSE
+NOTICE
 MANIFEST
 Makefile.PL
 README
-LICENSE
-NOTICE
 lib/ServiceNow/Attachment.pm
 lib/ServiceNow/Configuration.pm
 lib/ServiceNow/Connection.pm

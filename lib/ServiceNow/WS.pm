@@ -18,13 +18,14 @@
 #	1.02 _delete implemented
 #	1.03 _getKeys implemented
 #	1.04 _get implemented
+#	1.05 _encodedQuery implemented
 #
 # ======================================================================
 
 package ServiceNow::WS;
 #use Data::Dumper;
 
-$VERSION = '1.04';
+$VERSION = '1.05';
 my $RESULT;
 my $TYPE;
 
@@ -124,6 +125,16 @@ sub _delete {
   $TYPE = "deleteRecord";
   $RESULT = $me->{ $me->{'TARGET'}}->send($TYPE, \%hash);
   return $RESULT;
+}
+
+# implemented by Daniel Hernandez Cassel
+
+sub _encodedQuery {
+  my ($me, $query) = (shift, shift);
+  
+  $TYPE = "getRecords";
+  %keyHash = $me->{ $me->{'TARGET'}}->sendEncoded($TYPE, $query);
+  return %keyHash;
 }
 
 1;
