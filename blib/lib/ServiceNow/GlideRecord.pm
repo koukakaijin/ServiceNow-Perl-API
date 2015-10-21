@@ -19,6 +19,7 @@
 #	1.03 queryKeys and getKeyValue implemented
 #	1.04 get implemented
 #	1.05 encodedQuery implemented
+#	1.06 getKeyValue deprecated
 #
 # ======================================================================
 
@@ -27,7 +28,7 @@ package ServiceNow::GlideRecord;
 use ServiceNow::WS;
 use ServiceNow::WSResult;
 
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 my @VALUES;
 my @QUERIES;
@@ -350,7 +351,6 @@ Example:
 	$glideRecord->queryKeys();
 	
 Returns the sys_id of all the Glide Records in the Table with specified query.
-Get the Records with the getKeyValue() call.
 =cut
 
 sub queryKeys {
@@ -363,22 +363,6 @@ sub queryKeys {
   	%hash = @{$me->{'QUERIES'}};
   }
   $me->{'RESULTS'} = $me->{'WS'}->_getKeys(\%hash);
-}
-
-=head2 getKeyValue
-implemented by Daniel Hernandez Cassel
-
-getKeyValue()
-
-Example:
-
-	$glideRecord->getKeyValue();
-	
-Gets the sys_id values of the Glide Records obtained in previusly in a queryKeys() call.
-=cut
-
-sub getKeyValue {
-  my $me = shift;
   if ($me->{'RESULTS'}->{'getKeysResponse'}->{'count'} eq 0){
 	return "no results for the query";
   }else{
