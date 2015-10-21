@@ -23,7 +23,6 @@ lib/ServiceNow/Universal.pm
 lib/ServiceNow/WS.pm
 lib/ServiceNow/WSResult.pm
 lib/ServiceNow.pm
-new/encodedQuery.pl
 t/00-load.t
 t/manifest.t
 t/pod-coverage.t
