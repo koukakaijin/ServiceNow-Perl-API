@@ -20,6 +20,7 @@
 #	1.04 get implemented
 #	1.05 encodedQuery implemented
 #	1.06 getKeyValue deprecated
+#	1.07 clearValue implemented
 #
 # ======================================================================
 
@@ -415,6 +416,26 @@ sub encodedQuery {
 	my @v = values %value;
 	my %w = $me->{'WS'}->_encodedQuery(@v);
 	return %w;
+}
+
+=head2 clearValue
+implemented by Daniel Hernandez Cassel
+
+clearValue(name)
+
+Example:
+
+	$glideRecord->clearValue('name');
+	
+Clears the element within Glide Record with specified name.  
+Will not effect the GlideRecord within the Table until inserted or updated.
+
+=cut
+
+sub clearValue {
+	my ($me, $name) = (shift, shift);
+	$value = 'NULL';
+	push(@{$me->{'VALUES'}}, ($name => $value));
 }
 
 1;
