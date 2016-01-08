@@ -29,7 +29,7 @@ package ServiceNow::GlideRecord;
 use ServiceNow::WS;
 use ServiceNow::WSResult;
 
-$VERSION = '1.06';
+$VERSION = '1.07';
 
 my @VALUES;
 my @QUERIES;
