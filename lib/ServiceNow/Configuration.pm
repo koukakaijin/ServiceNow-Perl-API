@@ -15,13 +15,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#	1.01 getSoapUrl
+#
 # ======================================================================
 
 package ServiceNow::Configuration;
 
 use ServiceNow::Connection;
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 $SOAP_ENDPOINT_URL = "http://localhost:8080/glide/";
 $SOAP_ENDPOINT_SUFFIX = "?SOAP";
 $SOAP_USER = "itil";
@@ -101,6 +103,18 @@ Sets the complete SOAP endpoint used to access your Service-now instance
 sub setSoapEndPoint {
 	my ($me, $endPoint) = (shift, shift);
 	$SOAP_ENDPOINT_URL = $endPoint;
+}
+
+=head2 getSoapUrl
+
+getSoapUrl();
+
+Get only the SOAP url used to access to your Service-now instance
+
+=cut
+
+sub getSoapUrl {
+	return $SOAP_ENDPOINT_URL;
 }
 
 =head2 getUserName
